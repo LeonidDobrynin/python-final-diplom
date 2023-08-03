@@ -1,5 +1,5 @@
 from django.urls import path
-from backend.views import (
+from .views import (
     PartnerUpdate,
     RegisterAccount,
     ConfirmAccount,

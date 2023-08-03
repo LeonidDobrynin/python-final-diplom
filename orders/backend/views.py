@@ -1,5 +1,5 @@
 from distutils.util import strtobool
-from signals import new_user_registered, new_order, price_update
+from .signals import new_user_registered, new_order, price_update
 from django.contrib.auth import authenticate
 from django.db.models import Q, Sum, F
 from rest_framework.authtoken.models import Token
@@ -12,7 +12,7 @@ from requests import get
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView
 from yaml import load as load_yaml, Loader
-from models import (
+from .models import (
     Shop,
     Category,
     Product,
@@ -24,7 +24,7 @@ from models import (
     Contact,
     ConfirmEmailToken,
 )
-from backend.serializers import (
+from .serializers import (
     UserSerializer,
     CategorySerializer,
     ShopSerializer,
