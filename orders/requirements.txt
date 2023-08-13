@@ -7,3 +7,5 @@ ujson
 requests
 wheel
 views
+celery
+redis

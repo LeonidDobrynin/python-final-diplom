@@ -1,7 +1,8 @@
-from django.dispatch import receiver, Signal
+from celery import shared_task
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django_rest_passwordreset.signals import reset_password_token_created
+from django.dispatch import receiver, Signal
 
 from .models import ConfirmEmailToken, User, Shop
 
@@ -12,6 +13,7 @@ new_order = Signal()
 price_update = Signal()
 
 
+@shared_task
 @receiver(new_user_registered)
 def new_user_registered_signal(user_id, **kwargs):
     """
@@ -33,6 +35,7 @@ def new_user_registered_signal(user_id, **kwargs):
     msg.send()
 
 
+@shared_task
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, **kwargs):
     """
@@ -59,6 +62,7 @@ def password_reset_token_created(sender, instance, reset_password_token, **kwarg
     msg.send()
 
 
+@shared_task
 @receiver(new_order)
 def new_order_signal(user_id, **kwargs):
     """
@@ -80,9 +84,10 @@ def new_order_signal(user_id, **kwargs):
     msg.send()
 
 
+@shared_task
 @receiver(price_update)
 def price_update_signal(user_id, **kwargs):
-    #Отправка письма об изменении цен
+    # Отправка письма об изменении цен
     # send an e-mail to the users
     shop = Shop.objects.get(user_id=user_id).name
     for email in User.objects.exclude(type="shop").values_list("email", flat=True):

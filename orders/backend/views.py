@@ -1,5 +1,5 @@
 from distutils.util import strtobool
-from .signals import new_user_registered, new_order, price_update
+from .tasks import new_user_registered, new_order, price_update
 from django.contrib.auth import authenticate
 from django.db.models import Q, Sum, F
 from rest_framework.authtoken.models import Token
